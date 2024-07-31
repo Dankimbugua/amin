@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amin</title>
+    <style>
+        .line {
+            stroke:red;
+            stroke-width:8;
+        }
+    </style>
+</head>
+<body>
+<svg id="svg" height="512" width="1024" xmlns="http://www.w3.org/2000/svg">
+</svg>
+
+<script>
+    const flagLines = [
+        { x1: 3, y1: 2, x2: 3, y2: 6 },  // + |
+        { x1: 1.5, y1: 3, x2: 4.5, y2: 3 },  // + -
+
+        { x1: 8, y1: 5, x2: 10, y2: 2 },  // * /
+        { x1: 10, y1: 2, x2: 12, y2: 5 },  // * \
+        { x1: 8, y1: 5, x2: 12, y2: 5 }, // * _
+
+        { x1: 8, y1: 3, x2: 10, y2: 6 }, // * \
+        { x1: 10, y1: 6, x2: 12, y2: 3 }, // * /
+        { x1: 8, y1: 3, x2: 12, y2: 3 }, // * -
+
+        { x1: 15, y1: 2, x2: 15, y2: 6 },  // > |
+        { x1: 15, y1: 2, x2: 19, y2: 4 },  // > \
+        { x1: 15, y1: 6, x2: 19, y2: 4 }, // > /
+    ];
+
+    const aminLines = [
+        { x1: 0.5, y1: 6, x2: 2.5, y2: 2 },   // A /
+        { x1: 1.5, y1: 4, x2: 3.5, y2: 4 },  // A -
+        { x1: 2.5, y1: 2, x2: 4.5, y2: 6 },  // A \
+
+        { x1: 6.5, y1: 2, x2: 6.5, y2: 6 },  // M |
+        { x1: 6.5, y1: 2, x2: 8.25, y2: 6 }, // M \
+        { x1: 8.25, y1: 6, x2: 10, y2: 2 }, // M /
+        { x1: 10, y1: 2, x2: 10, y2: 6 }, // M |
+
+        { x1: 13, y1: 2, x2: 13, y2: 6 }, // I |
+
+        { x1: 16, y1: 2, x2: 16, y2: 6 },  // N |
+        { x1: 16, y1: 2, x2: 19, y2: 6 },  // N \
+        { x1: 19, y1: 2, x2: 19, y2: 6 }, // N |
+    ];
+
+    const parentEl = document.getElementById("svg");
+    const scale = 50;
+
+    for (const line of flagLines) {
+        const shape = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        shape.classList.add("line");
+        shape.setAttribute("x1", String(line.x1 * scale));
+        shape.setAttribute("y1", String(line.y1 * scale));
+        shape.setAttribute("x2", String(line.x2 * scale));
+        shape.setAttribute("y2", String(line.y2 * scale));
+
+        parentEl.appendChild(shape)
+    }
+
+</script>
+
+</body>
+</html>
