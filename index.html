@@ -8,48 +8,56 @@
     <title>Amin</title>
     <style>
         .line {
-            stroke:red;
-            stroke-width:8;
+            stroke: darkblue;
+            stroke-width: 10;
+            stroke-linejoin: round;
+            stroke-linecap: round;
         }
     </style>
 </head>
 <body>
-<svg id="svg" height="512" width="1024" xmlns="http://www.w3.org/2000/svg">
-</svg>
+
+<div class="container">
+    <!-- <iframe src="Jerusalem_Alpha_Blondy_Final.mp3" allow="autoplay"></iframe> -->
+    <audio src="Jerusalem_Alpha_Blondy_Final.mp3" autoplay controls></audio>
+
+    <svg id="svg" height="512" width="1024" xmlns="http://www.w3.org/2000/svg"></svg>
+    <svg id="svg2" height="512" width="1024" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
 
 <script>
     const flagLines = [
-        { x1: 3, y1: 2, x2: 3, y2: 6 },  // + |
-        { x1: 1.5, y1: 3, x2: 4.5, y2: 3 },  // + -
+        { id: "0", x1: 3, y1: 2, x2: 3, y2: 6 },  // + |
+        { id: "1", x1: 1.5, y1: 3, x2: 4.5, y2: 3 },  // + -
 
-        { x1: 8, y1: 5, x2: 10, y2: 2 },  // * /
-        { x1: 10, y1: 2, x2: 12, y2: 5 },  // * \
-        { x1: 8, y1: 5, x2: 12, y2: 5 }, // * _
+        { id: "2", x1: 10, y1: 2, x2: 8, y2: 5 },  // * /
+        { id: "3", x1: 10, y1: 2, x2: 12, y2: 5 },  // * \
+        { id: "4", x1: 8, y1: 5, x2: 12, y2: 5 }, // * _
 
-        { x1: 8, y1: 3, x2: 10, y2: 6 }, // * \
-        { x1: 10, y1: 6, x2: 12, y2: 3 }, // * /
-        { x1: 8, y1: 3, x2: 12, y2: 3 }, // * -
+        { id: "5", x1: 8, y1: 3, x2: 10, y2: 6 }, // * \
+        { id: "6", x1: 12, y1: 3, x2: 10, y2: 6 }, // * /
+        { id: "7", x1: 8, y1: 3, x2: 12, y2: 3 }, // * -
 
-        { x1: 15, y1: 2, x2: 15, y2: 6 },  // > |
-        { x1: 15, y1: 2, x2: 19, y2: 4 },  // > \
-        { x1: 15, y1: 6, x2: 19, y2: 4 }, // > /
+        { id: "8", x1: 15, y1: 2, x2: 15, y2: 6 },  // > |
+        { id: "9", x1: 15, y1: 2, x2: 19, y2: 4 },  // > \
+        { id: "10", x1: 19, y1: 4, x2: 15, y2: 6 }, // > /
     ];
 
     const aminLines = [
-        { x1: 0.5, y1: 6, x2: 2.5, y2: 2 },   // A /
-        { x1: 1.5, y1: 4, x2: 3.5, y2: 4 },  // A -
-        { x1: 2.5, y1: 2, x2: 4.5, y2: 6 },  // A \
+        { id: "11", x1: 2.5, y1: 2, x2: 0.5, y2: 6 },   // A /
+        { id: "12", x1: 1.5, y1: 4, x2: 3.5, y2: 4 },  // A -
+        { id: "13", x1: 2.5, y1: 2, x2: 4.5, y2: 6 },  // A \
 
-        { x1: 6.5, y1: 2, x2: 6.5, y2: 6 },  // M |
-        { x1: 6.5, y1: 2, x2: 8.25, y2: 6 }, // M \
-        { x1: 8.25, y1: 6, x2: 10, y2: 2 }, // M /
-        { x1: 10, y1: 2, x2: 10, y2: 6 }, // M |
+        { id: "14", x1: 6.5, y1: 2, x2: 6.5, y2: 6 },  // M |
+        { id: "15", x1: 6.5, y1: 2, x2: 8.25, y2: 6 }, // M \
+        { id: "16", x1: 10, y1: 2, x2: 8.25, y2: 6 }, // M /
+        { id: "17", x1: 10, y1: 2, x2: 10, y2: 6 }, // M |
 
-        { x1: 13, y1: 2, x2: 13, y2: 6 }, // I |
+        { id: "18", x1: 13, y1: 2, x2: 13, y2: 6 }, // I |
 
-        { x1: 16, y1: 2, x2: 16, y2: 6 },  // N |
-        { x1: 16, y1: 2, x2: 19, y2: 6 },  // N \
-        { x1: 19, y1: 2, x2: 19, y2: 6 }, // N |
+        { id: "19", x1: 16, y1: 2, x2: 16, y2: 6 },  // N |
+        { id: "20", x1: 16, y1: 2, x2: 19, y2: 6 },  // N \
+        { id: "21", x1: 19, y1: 2, x2: 19, y2: 6 }, // N |
     ];
 
     const parentEl = document.getElementById("svg");
@@ -58,6 +66,7 @@
     for (const line of flagLines) {
         const shape = document.createElementNS("http://www.w3.org/2000/svg", "line");
         shape.classList.add("line");
+        shape.setAttribute("id", line.id);
         shape.setAttribute("x1", String(line.x1 * scale));
         shape.setAttribute("y1", String(line.y1 * scale));
         shape.setAttribute("x2", String(line.x2 * scale));
@@ -65,6 +74,95 @@
 
         parentEl.appendChild(shape)
     }
+
+    // Animate
+    for (const lineIndex in flagLines) {
+        const flagLine = flagLines[lineIndex];
+        const aminLine = aminLines[lineIndex];
+
+        const animationX1 = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationX1.setAttribute("attributeName", "x1");
+        animationX1.setAttribute("begin", "0.5s");
+        animationX1.setAttribute("dur", "4.5s");
+        animationX1.setAttribute("from", String(flagLine.x1 * scale));
+        animationX1.setAttribute("to", String(aminLine.x1 * scale));
+        animationX1.setAttribute("fill", "freeze");
+
+        const animationY1 = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationY1.setAttribute("attributeName", "y1");
+        animationY1.setAttribute("begin", "0.5s");
+        animationY1.setAttribute("dur", "4.5s");
+        animationY1.setAttribute("from", String(flagLine.y1 * scale));
+        animationY1.setAttribute("to", String(aminLine.y1 * scale));
+        animationY1.setAttribute("fill", "freeze");
+
+        const animationX2 = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationX2.setAttribute("attributeName", "x2");
+        animationX2.setAttribute("begin", "0.5s");
+        animationX2.setAttribute("dur", "4.5s");
+        animationX2.setAttribute("from", String(flagLine.x2 * scale));
+        animationX2.setAttribute("to", String(aminLine.x2 * scale));
+        animationX2.setAttribute("fill", "freeze");
+
+        const animationY2 = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationY2.setAttribute("attributeName", "y2");
+        animationY2.setAttribute("begin", "0.5s");
+        animationY2.setAttribute("dur", "4.5s");
+        animationY2.setAttribute("from", String(flagLine.y2 * scale));
+        animationY2.setAttribute("to", String(aminLine.y2 * scale));
+        animationY2.setAttribute("fill", "freeze");
+
+        const animationX1Reverse = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationX1Reverse.setAttribute("attributeName", "x1");
+        animationX1Reverse.setAttribute("begin", "7s");
+        animationX1Reverse.setAttribute("dur", "3s");
+        animationX1Reverse.setAttribute("from", String(aminLine.x1 * scale));
+        animationX1Reverse.setAttribute("to", String(flagLine.x1 * scale));
+        animationX1Reverse.setAttribute("fill", "freeze");
+
+        const animationY1Reverse = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationY1Reverse.setAttribute("attributeName", "y1");
+        animationY1Reverse.setAttribute("begin", "7s");
+        animationY1Reverse.setAttribute("dur", "3s");
+        animationY1Reverse.setAttribute("from", String(aminLine.y1 * scale));
+        animationY1Reverse.setAttribute("to", String(flagLine.y1 * scale));
+        animationY1Reverse.setAttribute("fill", "freeze");
+
+        const animationX2Reverse = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationX2Reverse.setAttribute("attributeName", "x2");
+        animationX2Reverse.setAttribute("begin", "7s");
+        animationX2Reverse.setAttribute("dur", "3s");
+        animationX2Reverse.setAttribute("from", String(aminLine.x2 * scale));
+        animationX2Reverse.setAttribute("to", String(flagLine.x2 * scale));
+        animationX2Reverse.setAttribute("fill", "freeze");
+
+        const animationY2Reverse = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+        animationY2Reverse.setAttribute("attributeName", "y2");
+        animationY2Reverse.setAttribute("begin", "7s");
+        animationY2Reverse.setAttribute("dur", "3s");
+        animationY2Reverse.setAttribute("from", String(aminLine.y2 * scale));
+        animationY2Reverse.setAttribute("to", String(flagLine.y2 * scale));
+        animationY2Reverse.setAttribute("fill", "freeze");
+
+
+        document.getElementById(`${lineIndex}`).appendChild(animationX1);
+        document.getElementById(`${lineIndex}`).appendChild(animationY1);
+        document.getElementById(`${lineIndex}`).appendChild(animationX2);
+        document.getElementById(`${lineIndex}`).appendChild(animationY2);
+
+        document.getElementById(`${lineIndex}`).appendChild(animationX1Reverse);
+        document.getElementById(`${lineIndex}`).appendChild(animationY1Reverse);
+        document.getElementById(`${lineIndex}`).appendChild(animationX2Reverse);
+        document.getElementById(`${lineIndex}`).appendChild(animationY2Reverse);
+
+        document.getElementById(`${lineIndex}`).appendChild(animationX1);
+        document.getElementById(`${lineIndex}`).appendChild(animationY1);
+        document.getElementById(`${lineIndex}`).appendChild(animationX2);
+        document.getElementById(`${lineIndex}`).appendChild(animationY2);
+
+    }
+
+    document.getElementsByTagName('audio').item(0).play();
 
 </script>
 
